@@ -1,0 +1,41 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        # insertion sort 
+        # the core idea is likely to put the element in the
+        # correct position or something and ignore everything else 
+
+        def mergeSort(arr, l, r):
+            if l == r:
+                return arr 
+            
+            m = (l + r) // 2
+            mergeSort(arr, l, m)
+            # 
+            mergeSort(arr, m + 1, r)
+            merge(arr, l , m , r)
+            return arr
+
+        def merge(nums, L, M, R):
+            left = nums[L:M + 1] # M + 1 is not inclusive
+            right = nums[M + 1:R + 1]
+            i, j , k = L, 0 , 0
+            while j < len(left) and k < len(right):
+                # left = [3, 5, 11]
+                # right = [99, 105]
+                
+                if left[j] < right[k]: 
+                    nums[i] = left[j] # nums[0] = 3
+                    j += 1
+                else:
+                    nums[i] = right[k]
+                    k += 1
+                i += 1
+            while j < len(left):
+                nums[i] = left[j]
+                j += 1
+                i += 1
+            while k < len(right):
+                nums[i] = right[k]
+                k += 1
+                i += 1
+        return mergeSort(nums, 0, len(nums) - 1)
