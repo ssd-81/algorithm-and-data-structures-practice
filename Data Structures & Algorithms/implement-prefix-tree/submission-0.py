@@ -1,0 +1,38 @@
+class TrieNode:
+    def __init__(self, val=0):
+        self.val = val 
+        self.is_word = False
+        self.children = {}
+
+class PrefixTree:
+    def __init__(self):
+        self.root = TrieNode() # does it have to be self.root
+
+    def insert(self, word: str) -> None:
+        node = self.root
+        for c in word:
+            if c in node.children:
+                node = node.children[c]
+            else:
+                node.children[c] = TrieNode(c)
+                node = node.children[c]
+        node.is_word = True 
+
+    def search(self, word: str) -> bool:
+        node = self.root 
+        for c in word:
+            if c in node.children:
+                node = node.children[c]
+            else:
+                return False 
+        return node.is_word
+
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root 
+        for c in prefix:
+            if c in node.children:
+                node = node.children[c]
+            else:
+                return False 
+        return True 
+        
